@@ -1,9 +1,10 @@
-use std::time::Duration;
+use std::{time::Duration, sync::Arc, borrow::BorrowMut};
 
 use rusb::{
     request_type, Context, Device, DeviceHandle, Direction, GlobalContext, Recipient, RequestType,
     UsbContext,
 };
+use rusb_async::TransferPool;
 
 const EASYCAP_VID: u16 = 0x1b71;
 const EASYCAP_PID: u16 = 0x3002;
@@ -27,7 +28,7 @@ pub enum Input {
 pub struct EasyCap {
     device: Device<Context>,
     context: Context,
-    handle: DeviceHandle<Context>,
+    pub(crate) handle: Arc<DeviceHandle<Context>>,
 
     resolution: Resolution,
     standard: TVStandard,
@@ -48,9 +49,15 @@ impl EasyCap {
     pub fn new() -> Result<EasyCap, rusb::Error> {
         let context = rusb::Context::new()?;
         let device = get_device(&context, EASYCAP_VID, EASYCAP_PID)?;
-        let mut handle = device.open()?;
+        let mut handle = Arc::new(device.open()?);
+        // This is very ugly, figure out a better way?
+        Arc::get_mut(&mut handle).unwrap().claim_interface(0);
 
-        handle.claim_interface(0)?;
+        //claim_interface(0);
+        //Arc::make_mut(this)
+        //let mut h = handle.clone();
+        //let pool = TransferPool::new(handle.clone()).unwrap(); // TODO: Deal with errors properly
+        //h.claim_interface(0)?;
 
         Ok(EasyCap {
             device,
@@ -280,5 +287,12 @@ impl EasyCap {
 
         self.set_registers(registers)?;
         Ok(())
+    }
+
+    // Activating the Alternative mode is necessary to begin streaming
+    // TODO: refactor this
+    pub fn alt_setting(&mut self) {
+        Arc::get_mut(&mut self.handle).unwrap().set_alternate_setting(0, 1);
+        //self.handle.set_alternate_setting(0, 1);
     }
 }
