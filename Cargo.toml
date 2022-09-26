@@ -8,3 +8,7 @@ edition = "2021"
 [dependencies]
 rusb = "0.9.1"
 rusb-async = "0.0.1-alpha"
+
+[patch.crates-io]
+rusb = {path = "../rusb"}
+rusb-async = { path = "../rusb/rusb-async/" }

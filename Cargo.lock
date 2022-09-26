@@ -25,8 +25,6 @@ checksum = "8371e4e5341c3a96db127eb2465ac681ced4c433e01dd0e938adbef26ba93ba5"
 [[package]]
 name = "libusb1-sys"
 version = "0.6.4"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f9d0e2afce4245f2c9a418511e5af8718bcaf2fa408aefb259504d1a9cb25f27"
 dependencies = [
  "cc",
  "libc",
@@ -43,8 +41,6 @@ checksum = "1df8c4ec4b0627e53bdf214615ad287367e482558cf84b109250b37464dc03ae"
 [[package]]
 name = "rusb"
 version = "0.9.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "703aa035c21c589b34fb5136b12e68fc8dcf7ea46486861381361dd8ebf5cee0"
 dependencies = [
  "libc",
  "libusb1-sys",
@@ -53,8 +49,6 @@ dependencies = [
 [[package]]
 name = "rusb-async"
 version = "0.0.1-alpha"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7e644d030b8d3a65d39d4be8f277f6e32d27e3a60676f6c5026d4794d279e738"
 dependencies = [
  "libc",
  "rusb",

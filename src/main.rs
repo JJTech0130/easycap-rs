@@ -9,7 +9,7 @@ pub mod streaming;
 fn main() {
     //println!("Searching for EasyCap device...");
 
-    let mut easycap = EasyCap::new().unwrap();
+    let mut easycap = EasyCap::new().expect("Failed to find EasyCap device!");
     easycap.begin_capture();
     easycap.set_standard(easycap::TVStandard::NTSC);
     easycap.set_input(easycap::Input::Composite);
