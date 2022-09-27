@@ -2,6 +2,8 @@
 name = "easycap"
 version = "0.0.0"
 edition = "2021"
+description = "WIP EasyCap USB 2.0 Video Capture Device Driver"
+license = "MIT"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
